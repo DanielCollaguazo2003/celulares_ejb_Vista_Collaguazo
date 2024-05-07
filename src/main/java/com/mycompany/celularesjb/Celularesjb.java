@@ -3,11 +3,19 @@
  */
 package com.mycompany.celularesjb;
 
+import controlador.ListenerBtnActEnviar;
+import controlador.ListenerBtnActualizar;
+import controlador.ListenerBtnEliminar;
+import controlador.ListenerBtnInsertar;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import ups.edu.ec.business.GestionCelularRemoto;
 import ups.edu.ec.model.Celular;
+import ups.edu.ec.model.DefaultListCelulares;
+import vista.VistaGeneral;
 
 /**
  *
@@ -28,16 +36,29 @@ public class Celularesjb {
             final Context context = new InitialContext(jndiProperties);
             GestionCelularRemoto gestionCelulares = (GestionCelularRemoto) context.lookup("ejb:/celulares/GestionCelular!ups.edu.ec.business.GestionCelularRemoto");
             // Uso del EJB
-            Celular Celular = new Celular();
-            Celular.setCodigo(2);
-            Celular.setIMEI("6578923414723867354724");
-            Celular.setColor("Blanco");
-            Celular.setMarca("Iphone");
-            Celular.setModelo("12 Pro Max");
-            Celular.setPrecio(1119.2);
-            gestionCelulares.guardarCelulares(Celular);
-            System.out.println("Celular guardado!");
-
+            VistaGeneral v = new VistaGeneral();
+            Celular c = new Celular();
+            DefaultListCelulares listCelulares = new DefaultListCelulares();
+            
+            List<Celular> celularesAPI = gestionCelulares.getCelulares();
+            for (Celular celular : celularesAPI) {
+                listCelulares.addElement(celular);
+            }
+            
+            v.addList(listCelulares);
+            v.addList2(listCelulares);
+            
+            ListenerBtnInsertar btnInsertar = new ListenerBtnInsertar(v, c, gestionCelulares, listCelulares);
+            ListenerBtnEliminar btnEliminar = new ListenerBtnEliminar(v, c, gestionCelulares, listCelulares);
+            ListenerBtnActEnviar btnActEnviar = new ListenerBtnActEnviar(v, c);
+            ListenerBtnActualizar btnActualizar = new ListenerBtnActualizar(v, c, gestionCelulares, listCelulares);
+            
+            v.listenerActuaizarCelular(btnActualizar);
+            v.listenerActulizarEnviarCelular(btnActEnviar);
+            v.listenerEliminarCelular(btnEliminar);
+            v.listenerInsertarCelular(btnInsertar);
+            
+            v.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

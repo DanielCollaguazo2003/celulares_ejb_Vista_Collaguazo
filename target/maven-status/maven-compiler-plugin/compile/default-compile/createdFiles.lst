@@ -1,3 +1,9 @@
-com\mycompany\celularesjb\Celularesjb.class
-ups\edu\ec\model\Celular.class
+ups\edu\ec\model\DefaultListCelulares.class
+vista\VistaGeneral.class
+controlador\ListenerBtnEliminar.class
+controlador\ListenerBtnInsertar.class
 ups\edu\ec\business\GestionCelularRemoto.class
+ups\edu\ec\model\Celular.class
+com\mycompany\celularesjb\Celularesjb.class
+controlador\ListenerBtnActEnviar.class
+controlador\ListenerBtnActualizar.class

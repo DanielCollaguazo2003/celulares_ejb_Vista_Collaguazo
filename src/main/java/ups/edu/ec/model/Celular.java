@@ -13,7 +13,7 @@ public class Celular implements Serializable {
 	private String modelo;
 	private double precio;
         
-        
+      
 	public int getCodigo() {
 		return codigo;
 	}
